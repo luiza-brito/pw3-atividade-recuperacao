@@ -1,8 +1,10 @@
 package br.com.etechoracio.academia.controller;
 
+import br.com.etechoracio.academia.dto.ExercicioFisicoRequestDTO;
 import br.com.etechoracio.academia.dto.ExercicioFisicoResponseDTO;
 import br.com.etechoracio.academia.service.ExercicioFisicoService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
@@ -24,5 +26,10 @@ public class ExercicioFisicoController {
         return service.buscarAprovadoPorId(id)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
+    }
+
+    @PostMapping
+    public ResponseEntity<ExercicioFisicoResponseDTO> criar(@RequestBody ExercicioFisicoRequestDTO dto) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(service.criar(dto));
     }
 }
