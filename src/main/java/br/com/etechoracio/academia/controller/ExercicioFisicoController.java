@@ -3,6 +3,7 @@ package br.com.etechoracio.academia.controller;
 import br.com.etechoracio.academia.dto.ExercicioFisicoResponseDTO;
 import br.com.etechoracio.academia.service.ExercicioFisicoService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
@@ -16,5 +17,12 @@ public class ExercicioFisicoController {
     @GetMapping
     public List<ExercicioFisicoResponseDTO> listar() {
         return service.listarAprovados();
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<ExercicioFisicoResponseDTO> buscarPorId(@PathVariable Long id) {
+        return service.buscarAprovadoPorId(id)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
     }
 }

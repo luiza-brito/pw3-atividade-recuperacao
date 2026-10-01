@@ -6,6 +6,7 @@ import br.com.etechoracio.academia.repository.ExercicioFisicoRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -16,5 +17,9 @@ public class ExercicioFisicoService {
 
     public List<ExercicioFisicoResponseDTO> listarAprovados() {
         return mapper.toResponseList(repository.findByAprovadoTrue());
+    }
+
+    public Optional<ExercicioFisicoResponseDTO> buscarAprovadoPorId(Long id) {
+        return repository.findByIdAndAprovadoTrue(id).map(mapper::toResponse);
     }
 }
